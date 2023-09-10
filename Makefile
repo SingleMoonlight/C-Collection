@@ -7,11 +7,12 @@ ROOT_DIR = $(shell pwd)
 
 CFLAGS = -g -O0 -Wall -Wextra
 CFILES = $(ROOT_DIR)/main.c
-CINCS = -I
+INCS = -I -I/$(ROOT_DIR)
 
 export ROOT_DIR CFLAGS
 
-include $(ROOT_DIR)/module.mk
+include $(ROOT_DIR)/src/module.mk
+include $(ROOT_DIR)/test/module.mk
 
 .PHONY : clean all $(SUB_DIRS)
 
@@ -20,7 +21,7 @@ all : prepare $(TARGET)
 
 $(TARGET) : $(CFILES)
 	@echo "Building $@"
-	@$(CC) $(CFLAGS) $(CINCS) $^ -o $(BIN_DIR)/$@
+	$(CC) $(CFLAGS) $(INCS) $^ -o $(BIN_DIR)/$@
 
 prepare :
 	@-mkdir -p $(BIN_DIR)
